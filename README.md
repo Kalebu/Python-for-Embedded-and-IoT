@@ -7,7 +7,7 @@ getting started with Embedded and IoT Development using Python
 
 When it comes to embedded and IoT Development, it has mainly dominated 
 
-by low level programming language mainly C/C++ and Assembly due to their
+by low level programming language mainly [C/C++]() and [Assembly]() due to their
 
 lower memory management capability but its changing now Python is taking a 
 
@@ -16,16 +16,17 @@ leap and become one of top language for IoT and Embedded Development
 
 ## Supported Micro-controllers 
 
-- Raspberry Pi 
-- MicroPython
-- ESP8266
-- Arduino 
+- [Raspberry Pi](https://www.raspberrypi.org/) 
+- [Pyboard](http://micropython.org/)
+- [ESP8266](https://create.arduino.cc/projecthub/Niv_the_anonymous/esp8266-beginner-tutorial-project-6414c8)
+- [Arduino](https://www.arduino.cc/) 
 
 
 ## Ways to controlling Arduino with Python ?
 
-- Standard Firmata Protocol
-- PySerial 
+- [Micropython](http://micropython.org/)
+- [Standard Firmata Protocol](https://pypi.org/project/pyFirmata/)
+- [PySerial](https://pythonhosted.org/pyserial/) 
 
 
 ## IoT Development
@@ -38,7 +39,7 @@ we gonna see how to make everything connected
 
 You can actually use you're favorite web framework to link your 
 
-micro-controllers to cloud but for this tutorial we gonna use **flask**. 
+micro-controllers to cloud but for this tutorial we gonna use [**flask**](https://flask.palletsprojects.com/en/1.1.x/). 
 
-- Flask or (Django/Fastapi)
-- ngrok (To make a local port accessible over cloud)
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) or (Django/Fastapi)
+- [ngrok](https://flask.palletsprojects.com/en/1.1.x/) (To make a local port accessible over cloud)
