@@ -6,11 +6,8 @@ getting started with Embedded and IoT Development using Python
 ## Why Python ?
 
 When it comes to embedded and IoT Development, it has mainly dominated 
-
 by low level programming language mainly [C/C++]() and [Assembly]() due to their
-
 lower memory management capability but its changing now Python is taking a 
-
 leap and become one of top language for IoT and Embedded Development
 
 
