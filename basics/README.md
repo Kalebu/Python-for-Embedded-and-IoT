@@ -263,9 +263,15 @@ your Embedded solution
 
 Here we will see how to link our Embedded Devices to Cloud with Python, there are several options 
 you could use to bring your Embedded Devices to cloud using Python, one of them is using python web framework
-such as [Django](), [Flask]() and [FastApi](). 
+such as [Django](https://www.djangoproject.com/), [Flask](https://flask.palletsprojects.com/en/1.1.x/) and [FastApi](https://fastapi.tiangolo.com/). 
 
 In our today workshop we are going to use **Flask** to connect our devices to the internet.
+
+### Installation
+
+```python
+$ pip install flask 
+```
 
 If you're new to Flask, well it very straight forward micro-web framework, you can still understand it 
 even if you don't have a previous experience with it.
@@ -285,6 +291,98 @@ def Gateway():
 if __name__ == '__main__':
   app.run(debug=True)
 ```
+
+Above is our simple web-server made with flask, once you run you should see result to what shown below 
+
+```bash
+kalebu@kalebu-PC IoT -> python3 hello_world.py 
+ * Serving Flask app "hello_world" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with inotify reloader
+ * Debugger is active!
+ * Debugger PIN: 133-374-948
+```
+
+Now that we have seen how a Simple flask work now leds make a simple control, that allows us to controll the light emitting diode from browser 
+
+Now we know how flask work let's make a simple program which gonna allow us to easily control the light emitting diode from web, 
+in this example I have used arduino command api but infact you could use any of your favorite library.
+
+with arduino command api our Gateway code is going to look like  this 
+
+```python 
+from flask import Flask
+from Arduino import Arduino
+
+board = Arduino()
+app = Flask(__name__)
+
+board.pinMode(13, "OUTPUT")
+
+@app.route('/<command>')
+def Gateway(command):
+    if str(command) == 'on':
+        board.digitalWrite(13, "HIGH")
+        response = "The led is on"
+    elif str(command) == 'off':
+        board.digitalWrite(13, "LOW")
+        response = "The led is off"
+    else:
+        response = 'Uknown command'
+    return {'response': response}
+
+if __name__ == '__main__':
+  app.run(debug=True)
+```
+
+We can even something more interesting with it, the limit is your own imagination, now lets make a simple python which 
+we can ask it how it's outside using voice and then reply back to us.
+
+In this example I have used Speech Recognition library but you don't need to know all of it just made a wrapper you can just call a listen 
+function and then it will will do the rest. ghost package is found in the IoT folder you can just copy and make sure its in your project directory
+or if you cloned the repo the folder and source code will be automatically downloaded.
+
+Here is our code to act as minimal assistance over voice 
+
+```python 
+from Arduino import Arduino
+from ghost import ghost_ear
+
+board = Arduino()
+
+def check_outside():
+    for _ in range(1000):
+        intensity = board.analogRead(0)
+    intensity = board.analogRead(0)
+    return intensity
+
+
+def Eve_Soul():
+    while True:
+        print(board.analogRead(0))
+        something = ghost_ear.listen()
+        if something:
+            outside_combo = ['outside', 'light', 'how', 'is outside', 'how is']
+            if any(word for word in something.split() if word in outside_combo):
+                outside = check_outside()
+                print('outside intensity ', outside)
+                if outside > 0:
+                    print('It\'s not that dark')
+                    board.digitalWrite(13, 'LOW')
+                    continue
+                print('Outside is dark, I\'m switching light on')
+                board.digitalWrite(13, "HIGH")
+                continue
+            print('It\'s great serving you what can I help?')
+            
+if __name__ == "__main__":
+    Eve_Soul()
+```
+
 
 ## Demo IoT Project 
 
