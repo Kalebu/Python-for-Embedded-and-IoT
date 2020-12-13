@@ -47,7 +47,13 @@ some of approaches that are being done to accomplish this.
 - [PyFirmata](https://pypi.org/project/pyFirmata/)
 - [Arduino-python3](https://pypi.org/project/arduino-python3/)
 
-### PySerial with Arduino 
+### PySerial with Arduino
+
+### Installation 
+
+```bash
+$ pip install pyserial
+```
 
 **PySerial** is a python library that enables the access and control of **Serial port** from Python, with libary 
 we can directly read the data sent from arduino board over USB and also write to it. 
@@ -148,13 +154,110 @@ therefore writting a code in native arduino language and providing an interface 
 better approach since the other mentioned approaches use standard **firmata protocols** which only provide basic control to the arduino,
 incase you wanna something complex you might wanna reinvent the wheel and design the libraries from scratch which is not advised.
 
-### PyFirmata with Arduino 
+### PyFirmata with Arduino
+
+#### Installation
+
+```bash
+$ pip install pyFirmata
+```
+
 **PyFirmata** is a python libary that alllow python to communicate with arduino over USB using standard firmata protocol, 
-[standard firmata]()
+[standard firmata](https://www.arduino.cc/en/reference/firmata), to get started you just need to upload the standard firmata code to 
+the arduino board.
+
+Here is link to [standard-firmata-code](https://github.com/Kalebu/Python-for-Embedded-and-IoT/blob/main/basics/pyfirmata-with-arduino/standard_firmata.ino)
+
+Once you upload the code to the arduino board you're now ready to get started controlling it using pyfirmata library just as shown below
+
+Here is python-code to blink the LED
+
+```python
+import time
+from pyfirmata import Arduino
+
+board = Arduino('/dev/ttyUSB0')
+
+def blink():
+  while True:
+    board.digital[13].write(1)
+    time.sleep(1)
+    board.digital[13].write(0)
+    time.sleep(1)
+
+blink()
+```
+
+The above code will be intepreted in real-time by the firmata protocol running on arduino board and use it to peform corresponding action, 
+for instnce for now it's going to blink the LED.
+
+Here is a python-code to read an LDR with firmata protocols
+
+```python
+import time 
+from pyfirmata import Arduino, util
+
+board = Arduino('/dev/ttyUSB0')
+
+util.Iterator(board).start()
+board.analog[0].enable_reporting()
+
+while True:
+  light_intensity = board.analog[0].read()
+  print(light_intensity)
+  time.sleep(1) 
+```
 
 ### Arduino-python3
+
+#### Installation
+
+```bash
+$ pip install arduino-python3
+```
+
 **Arduino-python3** A light-weight Python library that provides a serial bridge for communicating with Arduino microcontroller boards, 
 It is written using a custom protocol, similar to Firmata.
+
+To get started using Arduino command API in python you might need to firtly upload the prototype protocol code to the arduino and then 
+you're on the move to begin using python to control it.
+
+Here is a link to [Arduino-commnad-api-protocol](https://github.com/Kalebu/Python-for-Embedded-and-IoT/blob/main/basics/arduino-python3/prototype/prototype.ino)
+
+Blinking an LED with Arduino command API would normally look like this 
+
+```python
+import time
+from Arduino import Arduino
+
+board = Arduino()
+board.pinMode(13, "OUTPUT")
+
+while True:
+    board.digitalWrite(13, "HIGH")
+    time.sleep(1)
+    board.digitalWrite(13, "LOW")
+    time.sleep(1)
+```
+The above code will automatically find the port an arduino is connected and connect to it and then begin controlling 
+the arduino using its own custom protocol similar to that of firmata.
+
+Here is the arduino code to read signal from LDR using custom protocol
+
+```python 
+import time
+from Arduino import Arduino
+
+board = Arduino()
+
+while True:
+    light_intensity = board.analogRead(0)
+    print(light_intensity)
+    time.sleep(0.1)
+```
+
+Arduino-command-API can be one with the easiest syntax of all the alternative so it all comes to you which one you choose to build 
+your Embedded solution
 
 ## IOT Dev with Python 
 
