@@ -154,6 +154,8 @@ therefore writting a code in native arduino language and providing an interface 
 better approach since the other mentioned approaches use standard **firmata protocols** which only provide basic control to the arduino,
 incase you wanna something complex you might wanna reinvent the wheel and design the libraries from scratch which is not advised.
 
+If you want a detailed description to PySerial with arduino, I recommend you checking out this repo [ArduinoPySerial_Series](https://github.com/Kalebu/ArduinoPySerial_LearningSeries)
+
 ### PyFirmata with Arduino
 
 #### Installation
@@ -208,6 +210,8 @@ while True:
   time.sleep(1) 
 ```
 
+For more information on PyFirmata you can visit their official [PyFirmata Documentation](https://pyfirmata.readthedocs.io/en/latest/)
+
 ### Arduino-python3
 
 #### Installation
@@ -257,7 +261,7 @@ while True:
 ```
 
 Arduino-command-API can be one with the easiest syntax of all the alternative so it all comes to you which one you choose to build 
-your Embedded solution
+your Embedded solution, for more info visit their [github repository](https://github.com/Kalebu/Arduino-Python3-Command-API)
 
 ## IOT Dev with Python 
 
@@ -339,6 +343,7 @@ if __name__ == '__main__':
   app.run(debug=True)
 ```
 
+## Demo project
 We can even something more interesting with it, the limit is your own imagination, now lets make a simple python which 
 we can ask it how it's outside using voice and then reply back to us.
 
@@ -382,8 +387,3 @@ def Eve_Soul():
 if __name__ == "__main__":
     Eve_Soul()
 ```
-
-
-## Demo IoT Project 
-
-In this part we are going to build a simple Demo IoT Project using Python 
