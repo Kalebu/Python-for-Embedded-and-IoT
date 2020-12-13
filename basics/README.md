@@ -16,7 +16,7 @@ certain protocols, examples of this board includes [Arduino Uno](https://www.ard
 Due availability In a this Pycon workshop, we are going to focus more on controlling Arduino compatible Arduino boards
 We are going to see different approaches that are being used on controlling this micro-controller board Tfrom Python.
 
-<img src="arduino-python.jpg" alt="Python For IoT" width="400"/>
+<img src="images/arduino-python.jpg" alt="Python For IoT" width="400"/>
 
 If this is your first time hearing about Arduino boards, well its a programmable prototyping board that is heavily used by different kinds of people 
 from proffessionals, teachers , students , hobbyst and ... to learn and build micro-controller based electronics projects in easy and simple way.
@@ -28,7 +28,7 @@ Apart from the fact arduino is used as Prototyping board, its now being employed
 with Development of improved board such as [Controllino](https://www.controllino.com/) simplify the whole process when it comes to industrial Automation and Control using builtin arduino board
 being programmed by the same arduino IDE.
 
-<img src="Controllino_Animated.gif" alt="Python For IoT" width="400"/>
+<img src="images/Controllino_Animated.gif" alt="Python For IoT" width="400"/>
 
 ## Can Arduino run Python ?
 
@@ -41,21 +41,120 @@ be un realist running both an interpreter together with source code in that rang
 Arduino board can be controlled with Python over USB through Serial communication in combination with some protocols, The following are 
 some of approaches that are being done to accomplish this.
 
+<img src="images/arduino-setup.jpg" alt="Python For IoT" width="400"/>
+
 - [PySerial](https://pypi.org/project/pyserial/)
 - [PyFirmata](https://pypi.org/project/pyFirmata/)
 - [Arduino-python3](https://pypi.org/project/arduino-python3/)
 
-## PySerial with Arduino 
+### PySerial with Arduino 
 
-----
+**PySerial** is a python library that enables the access and control of **Serial port** from Python, with libary 
+we can directly read the data sent from arduino board over USB and also write to it. 
 
-## PyFirmata with Arduino 
+In order to control a board using PySerial, we need tell python a **specific port** we are gonna be reading and writing to, 
+this can be done in easy syntax just as shown below.
 
-----
+Using PySerial you might need to get familiar with both python and arduino language, whereby you're going to use arduino language to 
+read signals from 
 
-## Arduino-python3
+```c++
 
-----
+
+int led = 13;
+
+void setup(){
+    pinMode(led, OUTPUT);
+    Serial.begin(9600);
+}
+
+void loop(){
+  if (Serial.available()){
+      char command = Serial.read();
+      if (command=='o'){
+        digitalWrite(led, HIGH);
+      }
+      else{
+        digitalWrite(led, LOW);
+      }
+  }
+}
+
+```
+The above arduino code is written in such a way it will be waiting for a signal through Serial port to control the builtin light 
+emitting diode, the Python code to blind the LED would normally look like this.
+
+```python
+import time  
+from serial import Serial
+
+arduino_board = Serial('/dev/ttyUSB0', baudrate=9600, timeout=1)
+
+def blink():
+  while True:
+    arduino.write(b'o')
+    time.sleep(1)
+    arduino.write(b'f')
+    time.sleep(1)
+
+blink()
+```
+
+The above example how to write/control arduino elements from python, you can also read the signal from sensors connected to the arduino 
+board using the similar technique, for instance let's try reading a light intensity of and LDR connected to the arduino pin A0;
+
+<img src="images/arduino-ldr.jpg" alt="Python For IoT" width="400"/>
+
+
+The arduino-code would look like this 
+```c++
+int ldr = A0;
+
+void setup(){
+  pinMode(ldr, INPUT);
+  Serial.begin(115200);
+}
+
+void loop(){
+  int intensity = analogRead(ldr);
+  if (Serial.available()){
+    char command = Serial.read();
+    if (command=='r') Serial.println(intensity);
+  } 
+}
+
+```
+
+The above arduino will return the state of light intensity to an arduino when it recieve a **r** command 
+other wise it will do nothing.
+
+On the other side the Python code to read the sensor signal sent by arduino is going to look like this 
+
+```python
+from serial import Serial
+
+arduino = Serial('/dev/ttyUSB1', baudrate=115200, timeout=1)
+arduino.flush
+
+while True:
+    arduino.write(b'r')
+    light_intensity = arduino.readline().decode()
+    print(light_intensity)
+```
+
+## When to use PySerial ?
+I recommend to use PySerial when something you want to control is bit complex and required other arduino libraries to run,
+therefore writting a code in native arduino language and providing an interface to python using Serial communication would be 
+better approach since the other mentioned approaches use standard **firmata protocols** which only provide basic control to the arduino,
+incase you wanna something complex you might wanna reinvent the wheel and design the libraries from scratch which is not advised.
+
+### PyFirmata with Arduino 
+**PyFirmata** is a python libary that alllow python to communicate with arduino over USB using standard firmata protocol, 
+[standard firmata]()
+
+### Arduino-python3
+**Arduino-python3** A light-weight Python library that provides a serial bridge for communicating with Arduino microcontroller boards, 
+It is written using a custom protocol, similar to Firmata.
 
 ## IOT Dev with Python 
 
