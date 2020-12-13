@@ -34,20 +34,56 @@ being programmed by the same arduino IDE.
 
 Python cannot run or be excuted directly on the arduino-micro-controller from the fact that in order to run python on it,  we need some kind of 
 interpreter running in micro-controller which will be memory expensive. some arduino board comes with about **14KiB flash of memory** which can 
-be un realist running both an interpreter together with source code in that range of memory .
+be un realist running both an interpreter together with source code in that range of memory.
 
 ## How do we control Arduino Python ?
 
+Arduino board can be controlled with Python over USB through Serial communication in combination with some protocols, The following are 
+some of approaches that are being done to accomplish this.
+
+- [PySerial](https://pypi.org/project/pyserial/)
+- [PyFirmata](https://pypi.org/project/pyFirmata/)
+- [Arduino-python3](https://pypi.org/project/arduino-python3/)
+
+## PySerial with Arduino 
+
+----
+
+## PyFirmata with Arduino 
+
+----
+
+## Arduino-python3
+
+----
 
 ## IOT Dev with Python 
 
-Here we will see how to link our Embedded Devices 
+Here we will see how to link our Embedded Devices to Cloud with Python, there are several options 
+you could use to bring your Embedded Devices to cloud using Python, one of them is using python web framework
+such as [Django](), [Flask]() and [FastApi](). 
 
-to Cloud with Python 
+In our today workshop we are going to use **Flask** to connect our devices to the internet.
 
+If you're new to Flask, well it very straight forward micro-web framework, you can still understand it 
+even if you don't have a previous experience with it.
+
+A very simple Flask Gateway might look like this
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def Gateway():
+  return {
+    'who_am_i': 'I\'m a very simple IoT Gateway'
+  }
+
+if __name__ == '__main__':
+  app.run(debug=True)
+```
 
 ## Demo IoT Project 
 
-In this part we are going to build a simple Demo IoT Project 
-
-using Python 
+In this part we are going to build a simple Demo IoT Project using Python 
