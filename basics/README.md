@@ -347,6 +347,12 @@ if __name__ == '__main__':
 We can even something more interesting with it, the limit is your own imagination, now lets make a simple python which 
 we can ask it how it's outside using voice and then reply back to us.
 
+## Installation
+
+```bash
+$ pip install SpeechRecognition
+```
+
 In this example I have used Speech Recognition library but you don't need to know all of it just made a wrapper you can just call a listen 
 function and then it will will do the rest. ghost package is found in the IoT folder you can just copy and make sure its in your project directory
 or if you cloned the repo the folder and source code will be automatically downloaded.
